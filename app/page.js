@@ -1,10 +1,10 @@
 // page.tsx is the ui for the / url path
-import Image from 'next/image'
+import { PartsList } from '@/components'
 
 export default function Home() {
   return (
     <main className=''>
-      <div> hello world</div>
+      <PartsList />
     </main>
   );
 };
