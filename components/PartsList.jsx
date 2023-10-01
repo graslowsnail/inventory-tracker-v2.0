@@ -1,10 +1,25 @@
+'use client'
 import Link from 'next/link';
-const people = [
-  { name: 'Sakib Zafar', currentStock: '100', boxQuantity: '50', barcodeId: '75ghut' },
-  { name: 'Pablo Ramirez', currentStock: '100', boxQuantity: '25', barcodeId: '9ru0ewipo' },
-]
+import { useState, useEffect } from 'react';
 
 export default function PartsList() {
+    // initial state is an empty array
+    const [partsData, setPartsData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                    const response = await fetch('http://localhost:3000/api');
+                    const data = await response.json();
+                    setPartsData(data);
+                } catch (error) {
+                    console.error("There was an error fetching the data:", error);
+                }
+            };
+            
+            fetchData();
+    }, []);  // Empty dependency array means this useEffect runs once when the component mounts
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -47,14 +62,14 @@ export default function PartsList() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                            {people.map((person) => (
-                                <tr key={person.name} className="divide-x divide-gray-200">
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{person.name}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{person.currentStock}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{person.boxQuantity}</td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-0">{person.barcodeId}</td>
+                            {partsData.items?.map((part) => (
+                                <tr key={part.name} className="divide-x divide-gray-200">
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.name}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.currentStock}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.boxQuantity}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-0">{part.barcodeId}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                        <Link href={`/parts/${person.barcodeId}`}>
+                                        <Link href={`/parts/${part.barcodeId}`}>
                                                 <button
                                                     type="button"
                                                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
