@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react';
 
 export default function PartsList() {
     // initial state is an empty array
-    const [partsData, setPartsData] = useState([]);
+    const [parts, setParts] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                     const response = await fetch('http://localhost:3000/api');
                     const data = await response.json();
-                    setPartsData(data);
+                    setParts(data.parts);
                 } catch (error) {
                     console.error("There was an error fetching the data:", error);
                 }
@@ -53,7 +53,7 @@ export default function PartsList() {
                                 <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     Box Quantity
                                 </th>
-                                <th scope="col" className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0">
+                                <th scope="col" className="py-3.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pr-0">
                                    Bar Code Id 
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -62,14 +62,14 @@ export default function PartsList() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                            {partsData.items?.map((part) => (
+                            {parts.map((part) => (
                                 <tr key={part.name} className="divide-x divide-gray-200">
                                     <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.name}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.currentStock}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.boxQuantity}</td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-0">{part.barcodeId}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.initialStock}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">{part.barCodeId}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                        <Link href={`/parts/${part.barcodeId}`}>
+                                        <Link href={`/parts/${part.barCodeId}`}>
                                                 <button
                                                     type="button"
                                                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
