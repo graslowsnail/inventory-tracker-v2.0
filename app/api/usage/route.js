@@ -2,6 +2,33 @@ import connectDb from '@/lib/connectDb';
 import { NextResponse, NextRequest } from 'next/server';
 import Part from '@/models/Part';
 import Usage from '@/models/Usage';
+import moment from 'moment';
+
+export const GET = async (req) => {
+  try{
+    await connectDb();
+    const usageData = await Usage.find({}); // fetch all usage data
+
+    // Transform the data for the calendar
+    const calendarData = usageData.map(usage => {
+      return{
+        titile: `Parts Used: ${usage.partsUsed.length}`,
+        start: new Date(usage.date),
+        end: new Date(usage.date),
+        allDay: true,
+        resource: usage // you can include the original usage data here
+      };
+    });
+
+    console.log(calendarData);
+
+    return NextResponse.json(calendarData, {status:200});
+  }
+  catch (error) {
+    console.error('failed to fetch usage data: ', error);
+    return new NextResponse('usage data fetch error', { status: 500});
+  }
+};
 
 // POST 
 export const POST = async (req) => {
@@ -21,8 +48,9 @@ export const POST = async (req) => {
     }
 
     // Ensure date is treated correctly
-    const usageDate = new Date(date);
-    usageDate.setHours(0, 0, 0, 0);
+    console.log(date);
+    const usageDate = moment.utc(date);
+    console.log(usageDate);
 
     // Find or create usage document for selected date
     let usage = await Usage.findOne({ date: usageDate});
