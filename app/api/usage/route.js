@@ -20,7 +20,7 @@ export const GET = async (req) => {
       };
     });
 
-    console.log(calendarData);
+    //console.log(calendarData);
 
     return NextResponse.json(calendarData, {status:200});
   }
@@ -35,7 +35,7 @@ export const POST = async (req) => {
 
   //get barCodeId and date from frontend.
   const { barCodeId, date } = await req.json();
-  console.log(barCodeId, date);
+  //console.log(barCodeId, date);
 
   try{
     await connectDb();
@@ -48,7 +48,7 @@ export const POST = async (req) => {
     }
 
     // Ensure date is treated correctly
-    console.log(date);
+    //console.log(date);
     const usageDate = moment.utc(date);
     console.log(usageDate);
 

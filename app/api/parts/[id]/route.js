@@ -9,7 +9,7 @@ export const GET = async (request) => {
   try {
     await connectDb();
     const part = await Part.findOne({ _id: partId});
-    console.log(part);
+    //console.log(part);
 
     return NextResponse.json({ part });
   } catch (error) {

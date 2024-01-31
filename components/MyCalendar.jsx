@@ -19,7 +19,7 @@ function MyCalendar() {
 
         // Check if the selected date has usage data
         if (!usageDates.includes(selectedDate)) {
-            alert('No usage data for this date.');
+            alert('No Parts were used on this day. Select another please');
             return;
         }
 
