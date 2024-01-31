@@ -6,6 +6,7 @@ export default function SingleUsageCard({date}) {
   const [usage, setUsage] = useState({});
   const [barCodeId, setBarCodeId] = useState('');
   const inputRef = useRef(null); // creates a ref for the input
+  const [ errorMessage, setErrorMessage] = useState('');
 
 // Function to fetch usage data
     const fetchUsageData = async () => {
@@ -37,18 +38,25 @@ export default function SingleUsageCard({date}) {
             });
 
             if (!response.ok) {
-                throw new Error('Error adding part');
-            }
+            const errorData = await response.json();
+            setErrorMessage(errorData.message || 'Error adding part');
+            return;
+        }
 
           // reset the input field and refoucus
           setBarCodeId('');
           inputRef.current.focus(); // refoucus on the input field
+          setErrorMessage('');
 
           // Re-fetch usage data to update the count
             fetchUsageData();
 
         } catch (error) {
             console.error(error.message);
+          setBarCodeId('');
+          inputRef.current.focus();
+          setErrorMessage('A Part with this Barcode was not found: Try again');
+
             // Handle the error state here
         }
     };
@@ -97,6 +105,12 @@ export default function SingleUsageCard({date}) {
                     Add Part
                   </button>
               </form>
+    {/* Error message display */}
+{errorMessage && (
+    <div className="mt-4 text-red-500">
+        {errorMessage}
+    </div>
+)}
 
               </div>
           </div>
