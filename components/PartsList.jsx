@@ -9,7 +9,7 @@ export default function PartsList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                    const response = await fetch('http://localhost:3000/api');
+                    const response = await fetch('http://localhost:3000/api/parts');
                     const data = await response.json();
                     setParts(data.parts);
                 } catch (error) {
@@ -69,7 +69,7 @@ export default function PartsList() {
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.initialStock}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">{part.barCodeId}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                        <Link href={`/parts/${part.barCodeId}`}>
+                                        <Link href={`/parts/${part._id}`}>
                                                 <button
                                                     type="button"
                                                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
