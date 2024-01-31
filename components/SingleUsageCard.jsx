@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function SingleUsageCard({date}) {
-  console.log(date + 'FAGGOT');
+  //console.log(date + 'FAGGOT');
   const [usage, setUsage] = useState({});
   const [barCodeId, setBarCodeId] = useState('');
   const inputRef = useRef(null); // creates a ref for the input
@@ -50,6 +50,7 @@ export default function SingleUsageCard({date}) {
 
           // Re-fetch usage data to update the count
             fetchUsageData();
+          console.log('bar code id scaned correctly '+ barCodeId);
 
         } catch (error) {
             console.error(error.message);
