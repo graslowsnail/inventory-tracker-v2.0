@@ -3,13 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import {useRouter} from 'next/navigation'
 
 const localizer = momentLocalizer(moment);
 
 function MyCalendar() {
     const [events, setEvents] = useState([]);
     const [usageDates, setUsageDates] = useState([]);
+    
+    const router = useRouter(); // create a instance of use router
 
+    const handleSelectSlot = ({ start }) => {
+        // Format the selected date
+        const selectedDate = moment(start).format('YYYY-MM-DD');
+
+        // Check if the selected date has usage data
+        if (!usageDates.includes(selectedDate)) {
+            alert('No usage data for this date.');
+            return;
+        }
+
+        // Navigate to the route with the selected date
+        router.push(`/usage/${selectedDate}`);
+    };
 
 useEffect(() => {
     async function fetchUsageData() {
@@ -62,6 +78,8 @@ useEffect(() => {
             endAccessor="end"
             style={{ height: 500 }}
             dayPropGetter={dayPropGetter}
+            onSelectSlot={handleSelectSlot}
+            selectable={true} // Make sure to set this to true
         />
         </div>
     );
