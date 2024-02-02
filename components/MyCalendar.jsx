@@ -1,6 +1,7 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { AddPartModal } from '@/components';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import {useRouter} from 'next/navigation'
@@ -8,27 +9,39 @@ import {useRouter} from 'next/navigation'
 const localizer = momentLocalizer(moment);
 
 function MyCalendar() {
+    const router = useRouter(); // create a instance of use router
+    const inputRef = useRef(null); // creates a ref for the input
     const [events, setEvents] = useState([]);
     const [usageDates, setUsageDates] = useState([]);
-    
-    const router = useRouter(); // create a instance of use router
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState('');
+    const [barCodeId, setBarCodeId] = useState('');
+    const [currentDate, setCurrentDate] = useState(new Date());
+
 
     const handleSelectSlot = ({ start }) => {
         // Format the selected date
-        const selectedDate = moment(start).format('YYYY-MM-DD');
+        const formattedDate = moment(start).format('YYYY-MM-DD');
+
+        setSelectedDate(formattedDate);
 
         // Check if the selected date has usage data
-        if (!usageDates.includes(selectedDate)) {
-            alert('No Parts were used on this day. Select another please');
-            return;
+        if (usageDates.includes(formattedDate)) {
+            router.push(`/usage/${formattedDate}`);
+        } else {
+            setIsModalOpen(true);
         }
-
-        // Navigate to the route with the selected date
-        router.push(`/usage/${selectedDate}`);
     };
 
-useEffect(() => {
-    async function fetchUsageData() {
+    const handleSave = async (barCodeId, date) => {
+        // Implement the save functionality here
+        // This involves making an API call to add the part to the usage document
+        console.log("Saving", barCodeId, "for date", date);
+        // After saving, fetch the updated usage data
+        handleAddPart(barCodeId,date);
+    };
+
+    const fetchUsageData = async () => {
         const response = await fetch('http://localhost:3000/api/usage');
         const data = await response.json();
         const utcEvents = data.map(event => {
@@ -48,8 +61,59 @@ useEffect(() => {
         setUsageDates(dates);
     }
 
+      const handleAddPart = async (barCodeId, date) => {
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/usage/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ barCodeId, date}),
+            });
+
+            if (!response.ok) {
+            const errorData = await response.json();
+            setErrorMessage(errorData.message || 'Error adding part');
+            return;
+        }
+
+          // reset the input field and refoucus
+          setBarCodeId('');
+
+          // Re-fetch usage data to update the count
+            fetchUsageData();
+          console.log('bar code id scaned correctly '+ barCodeId);
+
+            router.push(`/usage/${date}`);
+
+        } catch (error) {
+          console.error(error.message + 'FUCK');
+          setBarCodeId('');
+            // Handle the error state here
+        }
+    };
+
+
+useEffect(() => {
     fetchUsageData();
-}, []);
+}, []); // Empty dependency array means this useEffect runs once when the component mounts
+
+    const navigateToToday = () => {
+    setCurrentDate(new Date());
+};
+
+const navigateBack = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() - 1);
+    setCurrentDate(newDate);
+};
+
+const navigateNext = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(newDate.getDate() + 1);
+    setCurrentDate(newDate);
+};
 
 
     const dayPropGetter = (date) => {
@@ -80,6 +144,15 @@ useEffect(() => {
             dayPropGetter={dayPropGetter}
             onSelectSlot={handleSelectSlot}
             selectable={true} // Make sure to set this to true
+            date={currentDate}
+            onNavigate={setCurrentDate}
+            views={['month']}
+        />
+        <AddPartModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSave={handleSave}
+            selectedDate={selectedDate}
         />
         </div>
     );
