@@ -15,28 +15,25 @@ export default function AddPartModal({ isOpen, onClose, onSave, selectedDate }) 
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-                <h2>Add Part for {selectedDate}</h2>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        value={barCodeId}
-                        onChange={(e) => setBarCodeId(e.target.value)}
-                        placeholder="Enter Barcode ID"
-                        autoFocus
-                    />
-            <div className="flex justify-end mt-6">
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+          <h2>Add Part for {selectedDate}</h2>
+          <form onSubmit={handleSubmit}>
+              <input
+                  type="text"
+                  value={barCodeId}
+                  onChange={(e) => setBarCodeId(e.target.value)}
+                  placeholder="Enter Barcode ID"
+                  autoFocus
+              />
+              <div className="flex justify-end mt-6">
 
-                    <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                type="submit">Add Part
+                </button>
 
-    type="submit">Add Part</button>
-                <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-
-
-    onClick={onClose}>Close</button>
-    </div>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"                onClick={onClose}>Close
+                </button>
+              </div>
                 </form>
             </div>
         </div>
