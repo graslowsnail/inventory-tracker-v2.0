@@ -17,6 +17,8 @@ function MyCalendar() {
     const [selectedDate, setSelectedDate] = useState('');
     const [barCodeId, setBarCodeId] = useState('');
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [errorMessage, setErrorMessage] = useState('');
+
 
 
     const handleSelectSlot = ({ start }) => {
@@ -80,6 +82,7 @@ function MyCalendar() {
 
           // reset the input field and refoucus
           setBarCodeId('');
+            setErrorMessage('');
 
           // Re-fetch usage data to update the count
             fetchUsageData();
@@ -88,6 +91,7 @@ function MyCalendar() {
             router.push(`/usage/${date}`);
 
         } catch (error) {
+            setErrorMessage('A part with this barcode was not found: Try again');
           console.error(error.message + 'FUCK');
           setBarCodeId('');
             // Handle the error state here
@@ -154,6 +158,13 @@ const navigateNext = () => {
             onSave={handleSave}
             selectedDate={selectedDate}
         />
+            {/* Error message display */}
+{errorMessage && (
+    <div className="mt-4 text-red-500">
+        {errorMessage}
+    </div>
+)}
+
         </div>
     );
 }

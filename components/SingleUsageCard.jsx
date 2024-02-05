@@ -6,7 +6,7 @@ export default function SingleUsageCard({date}) {
   const [usage, setUsage] = useState({});
   const [barCodeId, setBarCodeId] = useState('');
   const inputRef = useRef(null); // creates a ref for the input
-  const [ errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
 // Function to fetch usage data
     const fetchUsageData = async () => {
@@ -19,7 +19,7 @@ export default function SingleUsageCard({date}) {
         }
     };
 
-    // Fetch data on component mount and when date changes
+    // Ftch data on component mount and when date changes
     useEffect(() => {
         fetchUsageData();
     }, [date]);
@@ -27,7 +27,6 @@ export default function SingleUsageCard({date}) {
 
   const handleAddPart = async (event) => {
         event.preventDefault();
-
         try {
             const response = await fetch(`http://localhost:3000/api/usage/`, {
                 method: 'POST',
