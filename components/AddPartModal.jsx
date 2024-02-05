@@ -14,8 +14,8 @@ export default function AddPartModal({ isOpen, onClose, onSave, selectedDate }) 
     if (!isOpen) return null;
 
   return (
-        <div className="modal-backdrop">
-            <div className="modal">
+    <div className="modal-backdrop" onClick={onClose}>
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <h2>Add Part for {selectedDate}</h2>
                 <form onSubmit={handleSubmit}>
                     <input
@@ -25,10 +25,20 @@ export default function AddPartModal({ isOpen, onClose, onSave, selectedDate }) 
                         placeholder="Enter Barcode ID"
                         autoFocus
                     />
-                    <button type="submit">Add Part</button>
+            <div className="flex justify-end mt-6">
+
+                    <button
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+
+    type="submit">Add Part</button>
+                <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+
+
+    onClick={onClose}>Close</button>
+    </div>
                 </form>
-                <button onClick={onClose}>Close</button>
             </div>
         </div>
-    );
+  );
 };
