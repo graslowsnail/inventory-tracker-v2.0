@@ -138,32 +138,33 @@ const navigateNext = () => {
 
     return (
         <div className='m-5 border-4'>
-        CALENDER COMPONENT
-        <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: 500 }}
-            dayPropGetter={dayPropGetter}
-            onSelectSlot={handleSelectSlot}
-            selectable={true} // Make sure to set this to true
-            date={currentDate}
-            onNavigate={setCurrentDate}
-            views={['month']}
-        />
-        <AddPartModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onSave={handleSave}
-            selectedDate={selectedDate}
-        />
+            CALENDER COMPONENT
+            <Calendar
+                localizer={localizer}
+                events={events}
+                startAccessor="start"
+                endAccessor="end"
+                style={{ height: 500 }}
+                dayPropGetter={dayPropGetter}
+                onSelectSlot={handleSelectSlot}
+                selectable={true} // Make sure to set this to true
+                date={currentDate}
+                onNavigate={setCurrentDate}
+                views={['month']}
+            />
+
+            <AddPartModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSave={handleSave}
+                selectedDate={selectedDate}
+            />
             {/* Error message display */}
-{errorMessage && (
-    <div className="mt-4 text-red-500">
-        {errorMessage}
-    </div>
-)}
+            {errorMessage && (
+            <div className="mt-4 text-red-500">
+                {errorMessage}
+            </div>
+            )}
 
         </div>
     );
