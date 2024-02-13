@@ -2,7 +2,7 @@
 import { useState, useEffect} from 'react';
 
 export default function SinglePartCard({ partId }) {
-  console.log(partId + " FUCK");
+  console.log(partId + " DUDEEEE");
   const [part, setPart] = useState([]);
 
   useEffect(() => {

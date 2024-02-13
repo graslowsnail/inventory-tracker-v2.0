@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 export default function SingleUsageCard({date}) {
-  //console.log(date + 'FAGGOT');
+  //console.log(date + 'DANG');
   const [usage, setUsage] = useState({});
   const [barCodeId, setBarCodeId] = useState('');
   const inputRef = useRef(null); // creates a ref for the input
@@ -61,6 +61,28 @@ export default function SingleUsageCard({date}) {
             // Handle the error state here
         }
     };
+
+  const handleDeletePart = async (barCodeId) => {
+        event.preventDefault();
+        try {
+            const response = await fetch(`http://localhost:3000/api/usage/subtractCount`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ date, barCodeId, action: 'decrement' }),
+            });
+            if (!response.ok) {
+              throw new Error('Failed to update part count');
+            }
+
+            // Refresh the usage data to reflect the change
+            fetchUsageData();
+          } catch (error) {
+            console.error('Error deleting one part:', error);
+            setErrorMessage('Failed to delete one part');
+          }
+  };
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -128,14 +150,13 @@ export default function SingleUsageCard({date}) {
                                     <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.partId.name}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.partId.currentStock}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                        <Link href={`/parts/${part.partId.barCodeId}`}>
                                                 <button
+                                                    onClick={() => handleDeletePart(part.partId.barCodeId)}
                                                     type="button"
                                                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                                 >
-                                                    View part
+                                                    Delete One
                                                 </button>
-                                        </Link>
                                     </td>
                                 </tr>
                             ))}
@@ -150,25 +171,3 @@ export default function SingleUsageCard({date}) {
   );
 };
 
-
-/*
-
-            {usage.partsUsed?.map((part, index) => (
-                <div key={index} className="grid grid-cols-2 gap-4">
-                     Repeat this block for each part attribute 
-                    <div>
-                        <h2 className="text-lg font-semibold">Part Name</h2>
-                        <p className="text-gray-600">{part.partId.name}</p>
-                        <p className="text-gray-600">
-                            {"part barCodeId " + part.partId.barCodeId}
-                        </p>
-                    </div>
-                    <div>
-                        <h2 className="text-lg font-semibold">Count</h2>
-                        <p className="text-gray-600">{part.count}</p>
-                    </div>
-                    // Add other fields as needed 
-                </div>
-            ))}
-  
-  */
