@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 export default function SingleUsageCard({date}) {
   //console.log(date + 'FAGGOT');
@@ -63,57 +64,111 @@ export default function SingleUsageCard({date}) {
 
   return (
     <div className="container mx-auto px-4 py-6">
-            <div className="bg-white shadow rounded-lg p-6">
-                <h1 className="text-2xl font-bold mb-4 text-center">Parts Used on {date}</h1>
-                {usage.partsUsed?.map((part, index) => (
-                    <div key={index} className="grid grid-cols-2 gap-4">
-                        {/* Repeat this block for each part attribute */}
-                        <div>
-                            <h2 className="text-lg font-semibold">Part Name</h2>
-                            <p className="text-gray-600">{part.partId.name}</p>
-                            <p className="text-gray-600">{'part barCodeId ' + part.partId.barCodeId}</p>
-                        </div>
-                        <div>
-                            <h2 className="text-lg font-semibold">Count</h2>
-                            <p className="text-gray-600">{part.count}</p>
-                        </div>
-                        {/* Add other fields as needed */}
-                    </div>
-                ))}
+            <h1 className="text-2xl font-bold mb-4 text-center">
+                Parts Used on {date}
+            </h1>
 
             <div className="mt-8">
-              <h2 className="text-xl font-bold mb-4">Enter Barcode ID</h2>
+                <h2 className="text-xl font-bold mb-4">Enter Barcode ID</h2>
 
                 <form onSubmit={handleAddPart}>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Barcode ID"
-                    type="text"
-                    value={barCodeId}
-                    onChange={(e) => setBarCodeId(e.target.value)} 
-                    placeholder="Enter Barcode ID"
-                    autoFocus // select input box upon load
-                  ref={inputRef} // Attach the ref here
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Barcode ID"
+                        type="text"
+                        value={barCodeId}
+                        onChange={(e) => setBarCodeId(e.target.value)}
+                        placeholder="Enter Barcode ID"
+                        autoFocus // select input box upon load
+                        ref={inputRef} // Attach the ref here
+                    />
+                    <button
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+                        type="submit"
+                    >
+                        Add Part
+                    </button>
+                </form>
+                {/* Error message display */}
+                {errorMessage && (
+                    <div className="mt-4 text-red-500">{errorMessage}</div>
+                )}
+            </div>
 
+    
+     <div className="mt-8 flow-root">
+            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                    <table className="min-w-full divide-y divide-gray-300 border-t border-l border-r border-b border-gray-300">
+                        <thead>
+                            <tr className="divide-x divide-gray-200">
+                                <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    Used Today
+                                </th>
+                                <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                    Barcode Id
+                                </th>
+                                <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                   Part Name 
+                                </th>
+                                <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                   Current Stock 
+                                </th>
+                                <th scope="col" className="py-3.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white">
+            {usage.partsUsed?.map((part, index) => (
+                                <tr key={index} className="divide-x divide-gray-200">
 
-                
-                  />
-                  <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-                    type="submit"
-                  >
-                    Add Part
-                  </button>
-              </form>
-    {/* Error message display */}
-{errorMessage && (
-    <div className="mt-4 text-red-500">
-        {errorMessage}
-    </div>
-)}
-
-              </div>
-          </div>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.count}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">{part.partId.barCodeId}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.partId.name}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.partId.currentStock}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500">
+                                        <Link href={`/parts/${part.partId.barCodeId}`}>
+                                                <button
+                                                    type="button"
+                                                    className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                >
+                                                    View part
+                                                </button>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
+
+    </div>
   );
 };
+
+
+/*
+
+            {usage.partsUsed?.map((part, index) => (
+                <div key={index} className="grid grid-cols-2 gap-4">
+                     Repeat this block for each part attribute 
+                    <div>
+                        <h2 className="text-lg font-semibold">Part Name</h2>
+                        <p className="text-gray-600">{part.partId.name}</p>
+                        <p className="text-gray-600">
+                            {"part barCodeId " + part.partId.barCodeId}
+                        </p>
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-semibold">Count</h2>
+                        <p className="text-gray-600">{part.count}</p>
+                    </div>
+                    // Add other fields as needed 
+                </div>
+            ))}
+  
+  */
