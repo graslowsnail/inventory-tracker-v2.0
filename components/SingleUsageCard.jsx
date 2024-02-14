@@ -1,11 +1,9 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
 
 export default function SingleUsageCard({date}) {
   //console.log(date + 'DANG');
-  const [usage, setUsage] = useState({});
-  const [barCodeId, setBarCodeId] = useState('');
+  const [usage, setUsage] = useState({}); const [barCodeId, setBarCodeId] = useState('');
   const inputRef = useRef(null); // creates a ref for the input
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -125,7 +123,7 @@ export default function SingleUsageCard({date}) {
                         <thead>
                             <tr className="divide-x divide-gray-200">
                                 <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                    Used Today
+                                   Current Stock 
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
                                     Barcode Id
@@ -134,7 +132,7 @@ export default function SingleUsageCard({date}) {
                                    Part Name 
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
-                                   Current Stock 
+                                    Used Today
                                 </th>
                                 <th scope="col" className="py-3.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900">
                                     Actions
@@ -144,11 +142,11 @@ export default function SingleUsageCard({date}) {
                         <tbody className="divide-y divide-gray-200 bg-white">
             {usage.partsUsed?.map((part, index) => (
                                 <tr key={index} className="divide-x divide-gray-200">
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.partId.currentStock}</td>
 
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.count}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">{part.partId.barCodeId}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.partId.name}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.partId.currentStock}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.count}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
                                                 <button
                                                     onClick={() => handleDeletePart(part.partId.barCodeId)}
