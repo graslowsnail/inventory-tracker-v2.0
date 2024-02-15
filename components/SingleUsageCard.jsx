@@ -54,7 +54,7 @@ export default function SingleUsageCard({date}) {
             console.error(error.message);
           setBarCodeId('');
           inputRef.current.focus();
-          setErrorMessage('A Part with this Barcode was not found: Try again');
+          setErrorMessage(error.message);
 
             // Handle the error state here
         }

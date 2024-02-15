@@ -33,6 +33,10 @@ export const POST = async (req) => {
       // Decrement count
       partsUsage.count--;
 
+      // Upate the part's current stock by adding back the boxQuantity
+      part.currentStock = part.currentStock + part.boxQuantity;
+      await part.save(); // save the part document after updating;
+
       // Optionally remove part from usage if count is 0
       if (partsUsage.count === 0) {
         usage.partsUsed = usage.partsUsed.filter(p => !p.partId.equals(part._id));

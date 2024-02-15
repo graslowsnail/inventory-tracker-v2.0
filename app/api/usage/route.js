@@ -61,22 +61,32 @@ export const POST = async (req) => {
 
     // Find if part has been used on this date
     let partsUsage = usage.partsUsed.find(p => p.partId.equals(part._id));
-    if (partsUsage) {
-      // Increment count
-      partsUsage.count++;
+if (partsUsage) {
+      // Increment count only if currentStock - boxQuantity >= 0
+      if (part.currentStock - part.boxQuantity >= 0) {
+        partsUsage.count++;
+        part.currentStock -= part.boxQuantity; // Decrement currentStock by boxQuantity
+      } else {
+        console.log('this part is out of stock');
+        return new NextResponse('part out of stock', { status: 400 });
+      }
     } else {
-      // add new part usage
-      usage.partsUsed.push({ partId: part._id, count:1 });
+      // Add new part usage if currentStock - boxQuantity >= 0
+      if (part.currentStock - part.boxQuantity >= 0) {
+        usage.partsUsed.push({ partId: part._id, count: 1 });
+        part.currentStock -= part.boxQuantity; // Decrement currentStock by boxQuantity
+      } else {
+        console.log('this part is out of stock');
+        return new NextResponse('PART NOT IN STOCK', { status: 400 });
+      }
     }
 
-    await usage.save();
-    return NextResponse.json('Part Usage record3d', {status:200});
-  }
-  catch(error) {
+    await part.save(); // Save the part document after updating
+    await usage.save(); // Save the updated Usage document
+    return NextResponse.json('Part Usage recorded', { status: 200 });
+  } catch (error) {
     console.log('Failed to POST PART USAGE:', error);
-
     // Respond with an error status code and message
-    return new NextResponse('Internal Server Error', { status: 500});
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
-
 };
