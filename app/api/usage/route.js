@@ -4,6 +4,7 @@ import Part from '@/models/Part';
 import Usage from '@/models/Usage';
 import moment from 'moment';
 
+// GET all usages
 export const GET = async (req) => {
   try{
     await connectDb();
@@ -30,7 +31,7 @@ export const GET = async (req) => {
   }
 };
 
-// POST 
+// POST req to create usage document and add parts inside that usage. also increment the parts count
 export const POST = async (req) => {
 
   //get barCodeId and date from frontend.

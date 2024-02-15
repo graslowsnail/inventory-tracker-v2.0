@@ -1,10 +1,13 @@
 'use client'
 import Link from 'next/link';
+import AddNewPartModal from '../components/AddNewPartModal';
 import { useState, useEffect } from 'react';
 
 export default function PartsList() {
     // initial state is an empty array
     const [parts, setParts] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,8 +23,16 @@ export default function PartsList() {
             fetchData();
     }, []);  // Empty dependency array means this useEffect runs once when the component mounts
 
-  return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    const handleOpenModal = () => {
+        setIsModalOpen(true); // Open the modal
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Close the modal
+    };
+
+    return (
+        <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
                 <h1 className="text-base font-semibold leading-6 text-gray-900">Parts</h1>
@@ -31,6 +42,7 @@ export default function PartsList() {
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                 <button
+                    onClick={handleOpenModal}
                     type="button"
                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
@@ -51,6 +63,9 @@ export default function PartsList() {
                                    Part Name 
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+                                   Initial Stock
+                                </th>
+                                <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
                                    Current Stock 
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
@@ -63,11 +78,10 @@ export default function PartsList() {
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                             {parts.map((part) => (
-                                <tr key={part.name} className="divide-x divide-gray-200">
-
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                        <Link href={`/parts/${part._id}`}>
-                                                <button
+                                <tr key={part._id} className=" divide-x devide-gray-200 ">
+                                                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500">
+                                        <Link href={`/parts/${part._id}`} passHref>
+                                <button
                                                     type="button"
                                                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                                 >
@@ -75,9 +89,10 @@ export default function PartsList() {
                                                 </button>
                                         </Link>
                                     </td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.name}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.currentStock}</td>
+                                <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.name}</td>
                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.initialStock}</td>
+<td className={`whitespace-nowrap px-3 py-4 text-sm  text-center text-gray-500 ${part.initialStock !== part.currentStock ? 'bg-yellow-200' : ''}`}>{part.currentStock}</td>
+                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.boxQuantity}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">{part.barCodeId}</td>
                                 </tr>
                             ))}
@@ -86,8 +101,11 @@ export default function PartsList() {
                 </div>
             </div>
         </div>
+                    <AddNewPartModal isOpen={isModalOpen} onClose={handleCloseModal} />
+
     </div>
-)
+);
+
 
 }
 

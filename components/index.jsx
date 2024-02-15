@@ -4,6 +4,7 @@ import SinglePartCard from './SinglePartCard';
 import SingleUsageCard from './SingleUsageCard';
 import MyCalendar from './MyCalendar';
 import AddPartModal from './AddPartModal';
+import AddNewPartModal from './AddNewPartModal';
 
 export {
   Header,
@@ -12,4 +13,5 @@ export {
   SingleUsageCard,
   MyCalendar,
   AddPartModal,
+  AddNewPartModal,
 };
