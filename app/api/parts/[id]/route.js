@@ -18,3 +18,23 @@ export const GET = async (request) => {
   }
 };
 
+// delete part from parts collection
+export const DELETE = async (request) => {
+  try {
+    await connectDb();
+    //const { partId } = req.query; // Get the partId from the URL
+    const partId = request.url.split('parts/')[1];
+    console.log(partId);
+    const deletedPart = await Part.findByIdAndDelete(partId);
+
+    if (!deletedPart) {
+      return new NextResponse('part not found', { status: 404});
+    }
+      return NextResponse.json('Part deleted', {status:200, deletedPart});
+    } catch (error) {
+      return new NextResponse('failed to delete part', { status: 500});
+  }
+};
+
+
+

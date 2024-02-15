@@ -2,7 +2,6 @@
 import { useState, useEffect} from 'react';
 
 export default function SinglePartCard({ partId }) {
-  console.log(partId + " DUDEEEE");
   const [part, setPart] = useState([]);
 
   useEffect(() => {
@@ -20,6 +19,30 @@ export default function SinglePartCard({ partId }) {
 
     fetchData();
   }, []);
+
+  const handleDelete = async () => {
+    const confirmDelete = confirm('Are you sure you want to delete this part?');
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/parts/${partId}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete the part');
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+        // Redirect or refresh the page, or show a success message
+        // For example, using window.location.href to redirect:
+        window.location.href = '/parts'; // Adjust the URL to your parts list page
+      } catch (error) {
+        console.error("Error deleting the part:", error);
+        // Handle error (e.g., show an error message)
+      }
+    }
+  };
 
 
   return (
@@ -54,7 +77,7 @@ export default function SinglePartCard({ partId }) {
         </div>
         <div className="flex justify-end mt-6">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</button>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+          <button onClick={handleDelete} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
         </div>
       </div>
     </div>
