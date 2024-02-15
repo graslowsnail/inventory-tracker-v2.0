@@ -32,6 +32,29 @@ export default function PartsList() {
         setIsModalOpen(false); // Close the modal
     };
 
+    const handleResetStock = async () => {
+    const confirmReset = confirm('Are you sure you want to reset all parts stock to initial stock?');
+    if (confirmReset) {
+        try {
+            const response = await fetch('http://localhost:3000/api/parts/reset-stock',
+            {method: 'POST'});
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert(data.message);
+        window.location.reload();
+                // Optionally refresh the page or state to reflect the changes
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            console.error('Error resetting stock:', error);
+            alert('Failed to reset stock: ' + error.message);
+        }
+    }
+};
+
     return (
         <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -50,6 +73,16 @@ export default function PartsList() {
                     Add Part
                 </button>
             </div>
+            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <button
+                    onClick={handleResetStock}
+                    type="button"
+                    className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                    Reset All Parts Stock
+                </button>
+            </div>
+
         </div>
         <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
