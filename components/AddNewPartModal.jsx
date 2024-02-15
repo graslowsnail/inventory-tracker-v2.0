@@ -50,45 +50,65 @@ export default function AddNewPartModal({ isOpen, onClose }) {
 
     return (
         <div className="modal-backdrop" onClick={onClose}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-                <h2>Add New Part</h2>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Part Name"
-                        autoFocus
-                        className="input bt-grey-200"
-                    />
-                    <input
-                        type="text"
-                        value={size}
-                        onChange={(e) => setSize(e.target.value)}
-                        placeholder="Size"
-                        className="input"
-                    />
-                    <input
-                        type="number"
-                        value={boxQuantity}
-                        onChange={(e) => setBoxQuantity(e.target.value)}
-                        placeholder="Box Quantity"
-                        className="input"
-                    />
-                    <input
-                        type="text"
-                        value={barCodeId}
-                        onChange={(e) => setBarCodeId(e.target.value)}
-                        placeholder="Barcode ID"
-                        className="input"
-                    />
-                    <input
-                        type="number"
-                        value={initialStock}
-                        onChange={(e) => setInitialStock(e.target.value)}
-                        placeholder="Initial Stock"
-                        className="input"
-                    />
+    <div className="modal p-4 bg-white rounded-lg shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <h2 className="text-xl font-semibold mb-4">Add New Part</h2>
+        <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="part-name">Part Name</label>
+                <input
+                    id="part-name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Part Name"
+                    autoFocus
+                    className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="size">Size</label>
+                <input
+                    id="size"
+                    type="text"
+                    value={size}
+                    onChange={(e) => setSize(e.target.value)}
+                    placeholder="Size"
+                    className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="box-quantity">Box Quantity</label>
+                <input
+                    id="box-quantity"
+                    type="number"
+                    value={boxQuantity}
+                    onChange={(e) => setBoxQuantity(e.target.value)}
+                    placeholder="Box Quantity"
+                    className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="barcode-id">Barcode ID</label>
+                <input
+                    id="barcode-id"
+                    type="text"
+                    value={barCodeId}
+                    onChange={(e) => setBarCodeId(e.target.value)}
+                    placeholder="Barcode ID"
+                    className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="initial-stock">Initial Stock</label>
+                <input
+                    id="initial-stock"
+                    type="number"
+                    value={initialStock}
+                    onChange={(e) => setInitialStock(e.target.value)}
+                    placeholder="Initial Stock"
+                    className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
                     <div className="flex justify-end mt-6">
                         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
                         type="submit">Add Part
@@ -97,10 +117,11 @@ export default function AddNewPartModal({ isOpen, onClose }) {
                         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                         onClick={onClose}>Close
                         </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </form>
+    </div>
+</div>
+
     );
 };
 

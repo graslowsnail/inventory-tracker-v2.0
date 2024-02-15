@@ -1,8 +1,11 @@
 'use client'
 import { useState, useEffect} from 'react';
+import UpdatePartModal from '../components/UpdatePartModal';
 
 export default function SinglePartCard({ partId }) {
   const [part, setPart] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +21,15 @@ export default function SinglePartCard({ partId }) {
     };
 
     fetchData();
-  }, []);
+  }, [partId]);
+
+  const handleEdit = () => {
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
 
   const handleDelete = async () => {
     const confirmDelete = confirm('Are you sure you want to delete this part?');
@@ -76,10 +87,23 @@ export default function SinglePartCard({ partId }) {
           </div>
         </div>
         <div className="flex justify-end mt-6">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</button>
+          <button onClick={handleEdit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</button>
           <button onClick={handleDelete} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
         </div>
       </div>
+    {/* Conditionally render the UpdatePartModal */}
+      {isModalOpen && (
+        <UpdatePartModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          part={part}
+          onUpdate={() => {
+            // You can refresh part data or take any other actions needed after an update
+            console.log('Part updated');
+            setIsModalOpen(false); // Optionally close the modal after update
+          }}
+        />
+      )}
     </div>
   );
 };

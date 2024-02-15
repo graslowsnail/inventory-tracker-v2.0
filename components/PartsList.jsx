@@ -28,6 +28,7 @@ export default function PartsList() {
     };
 
     const handleCloseModal = () => {
+        window.location.reload();
         setIsModalOpen(false); // Close the modal
     };
 

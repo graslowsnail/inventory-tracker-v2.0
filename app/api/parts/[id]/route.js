@@ -36,5 +36,39 @@ export const DELETE = async (request) => {
   }
 };
 
+export const PUT = async (req, res) => {
+  try {
+    await connectDb(); // Ensure database connection
+    // parse req.body to json
+    const partId = req.url.split('parts/')[1];
+    const body = await req.body.getReader().read().then(({ value, done }) => {
+      return new TextDecoder().decode(value);
+    });
+    const data = JSON.parse(body);
+    const { name, size, barCodeId, initialStock, boxQuantity,currentStock } = data;
+    console.log(data);
 
+    // Create a new document in the 'parts' collection
+    const updatedPart = await Part.findByIdAndUpdate(partId, {
+        name,
+        size,
+        barCodeId,
+        initialStock,
+        boxQuantity,
+        currentStock,
+      }, { new: true });
+
+    console.log(updatedPart);
+
+    if (!updatedPart) {
+      return new NextResponse('Part not found ', { status: 404 });
+      }
+
+    // Successfully created the new part
+    return NextResponse.json('part added',{ status:200, part: updatedPart });
+  } catch (error) {
+    console.error('Failed to update part:', error);
+    return new NextResponse('Internal Server Error', { status: 500});
+  }
+};
 
