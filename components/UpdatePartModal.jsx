@@ -97,6 +97,20 @@ export default function UpdatePartModal({ isOpen, onClose, part, onUpdate }) {
             </div>
 
             <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="current-stock">
+                    Current stock
+                </label>
+                <input
+                    id="current-stock"
+                    type="number"
+                    value={currentStock}
+                    onChange={(e) => setCurrentStock(e.target.value)}
+                    className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Current stock"
+                />
+            </div>
+
+            <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="barcode-id">
                     Barcode ID
                 </label>
