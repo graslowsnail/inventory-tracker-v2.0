@@ -5,6 +5,9 @@ import SingleUsageCard from './SingleUsageCard';
 import MyCalendar from './MyCalendar';
 import AddPartModal from './AddPartModal';
 import AddNewPartModal from './AddNewPartModal';
+import PartHistoryCard from './PartHistoryCard';
+import SinglePartHistoryCard from './SinglePartHistoryCard';
+
 
 export {
   Header,
@@ -14,4 +17,6 @@ export {
   MyCalendar,
   AddPartModal,
   AddNewPartModal,
+  PartHistoryCard,
+  SinglePartHistoryCard,
 };
