@@ -21,20 +21,32 @@ function MyCalendar() {
 
 
 
-    const handleSelectSlot = ({ start }) => {
-        // Format the selected date
-        const formattedDate = moment(start).format('YYYY-MM-DD');
+const handleSelectSlot = async ({ start }) => {
+    // Format the selected date
+    const formattedDate = moment(start).format('YYYY-MM-DD');
+    setSelectedDate(formattedDate);
 
-        setSelectedDate(formattedDate);
-
-        // Check if the selected date has usage data
-        if (usageDates.includes(formattedDate)) {
+    // Attempt to fetch usage data for the selected date
+    try {
+        const response = await fetch(`http://localhost:3000/api/usage/${formattedDate}`);
+        if (!response.ok) {
+            throw new Error('Usage data not found');
+        }
+        const data = await response.json();
+        if (data && data.partsUsed && data.partsUsed.length > 0) {
+            // Check if partsUsed contains valid part references
+            // Navigate or process data as needed
             router.push(`/usage/${formattedDate}`);
         } else {
+            // Handle case where part data might be missing or usage is empty
             setIsModalOpen(true);
         }
-    };
-
+    } catch (error) {
+        console.error('Error fetching usage data:', error);
+        // Handle the error (e.g., display a message or redirect)
+        setErrorMessage('The part data for this date is no longer available.');
+    }
+};
     const handleSave = async (barCodeId, date) => {
         // Implement the save functionality here
         // This involves making an API call to add the part to the usage document

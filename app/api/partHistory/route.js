@@ -7,7 +7,8 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectDb();
-    const partHistorys = await PartHistory.find();
+    // Sort part history docuemtns from newest to oldest 
+    const partHistorys = await PartHistory.find().sort({ resetDate: -1});
     console.log(partHistorys);
     return NextResponse.json({ partHistorys });
   }

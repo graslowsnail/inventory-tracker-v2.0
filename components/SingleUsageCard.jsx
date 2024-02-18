@@ -98,7 +98,6 @@ export default function SingleUsageCard({date}) {
                         type="text"
                         value={barCodeId}
                         onChange={(e) => setBarCodeId(e.target.value)}
-                        placeholder="Enter Barcode ID"
                         autoFocus // select input box upon load
                         ref={inputRef} // Attach the ref here
                     />
@@ -140,30 +139,36 @@ export default function SingleUsageCard({date}) {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-            {usage.partsUsed?.map((part, index) => (
-                                <tr key={index} className="divide-x divide-gray-200">
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.partId.currentStock}</td>
-
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">{part.partId.barCodeId}</td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">{part.partId.name}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">{part.count}</td>
-                                    <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                                <button
-                                                    onClick={() => handleDeletePart(part.partId.barCodeId)}
-                                                    type="button"
-                                                    className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                                >
-                                                    Delete One
-                                                </button>
-                                    </td>
-                                </tr>
-                            ))}
+                          {usage.partsUsed?.map((part, index) => (
+                            <tr key={index} className="divide-x divide-gray-200">
+                              <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">
+                                {part.partId ? part.partId.currentStock : 'N/A'}
+                              </td>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 text-center sm:pr-0">
+                                {part.partId ? part.partId.barCodeId : 'N/A'}
+                              </td>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 text-center">
+                                {part.partId ? part.partId.name : 'Part Deleted'}
+                              </td>
+                              <td className="whitespace-nowrap p-4 text-sm text-gray-500 text-center">
+                                {part.count}
+                              </td>
+                              <td className="whitespace-nowrap p-4 text-sm text-gray-500">
+                                <button
+                                  onClick={() => handleDeletePart(part.partId ? part.partId.barCodeId : '')}
+                                  type="button"
+                                  className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                >
+                                  Delete One
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
 
     </div>
   );
