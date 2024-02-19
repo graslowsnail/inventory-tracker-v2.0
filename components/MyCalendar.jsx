@@ -149,7 +149,7 @@ const navigateNext = () => {
     };
 
     return (
-        <div className='m-5 border-4'>
+        <div className='m-5 border-4 text-center'>
             CALENDER COMPONENT
             <Calendar
                 localizer={localizer}
