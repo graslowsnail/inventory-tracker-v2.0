@@ -28,7 +28,7 @@ const handleSelectSlot = async ({ start }) => {
 
     // Attempt to fetch usage data for the selected date
     try {
-        const response = await fetch(`http://localhost:3000/api/usage/${formattedDate}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/usage/${formattedDate}`);
         if (!response.ok) {
             throw new Error('Usage data not found');
         }
@@ -56,7 +56,7 @@ const handleSelectSlot = async ({ start }) => {
     };
 
     const fetchUsageData = async () => {
-        const response = await fetch('http://localhost:3000/api/usage');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage`);
         const data = await response.json();
         const utcEvents = data.map(event => {
             // Adjust the date to account for the time zone offset
