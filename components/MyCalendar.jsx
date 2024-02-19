@@ -36,7 +36,7 @@ const handleSelectSlot = async ({ start }) => {
         if (data && data.partsUsed && data.partsUsed.length > 0) {
             // Check if partsUsed contains valid part references
             // Navigate or process data as needed
-            router.push(`/usage/${formattedDate}`);
+            router.push(`/protected/usage/${formattedDate}`);
         } else {
             // Handle case where part data might be missing or usage is empty
             setIsModalOpen(true);

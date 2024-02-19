@@ -114,7 +114,7 @@ export default function PartsList() {
                             {parts.map((part) => (
                                 <tr key={part._id} className=" divide-x devide-gray-200 ">
                                                                     <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                        <Link href={`/parts/${part._id}`} passHref>
+                                        <Link href={`/protected/parts/${part._id}`} passHref>
                                 <button
                                                     type="button"
                                                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

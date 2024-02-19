@@ -11,7 +11,20 @@ export default function SinglePartCard({ partId }) {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/parts/${partId}`);
+
+        if (response.status === 500) {
+          // Part not found, redirect to the parts list page
+          window.location.href = '/protected/parts';
+          return;
+        }
+
         const data = await response.json();
+        if (!data.part) {
+          // Handle other scenarios as needed
+          return;
+        }
+
+
         console.log(data);
         setPart(data.part);
       } 
@@ -47,7 +60,7 @@ export default function SinglePartCard({ partId }) {
         console.log(data.message);
         // Redirect or refresh the page, or show a success message
         // For example, using window.location.href to redirect:
-        window.location.href = '/parts'; // Adjust the URL to your parts list page
+        window.location.href = '/protected/parts'; // Adjust the URL to your parts list page
       } catch (error) {
         console.error("Error deleting the part:", error);
         // Handle error (e.g., show an error message)

@@ -1,24 +1,17 @@
 import connectDb from '@/lib/connectDb';
 import Part from '@/models/Part';
 import { NextResponse } from "next/server";
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../auth/[...nextauth]/route';
 
 // GET part by id
 export const GET = async (request) => {
-  const session = await getServerSession(authOptions);
   const partId = request.url.split('parts/')[1];
 
-  if (!session || !session.user) {
-    return new NextResponse('not logged in.');
-  }
-   
   try {
     await connectDb();
     const part = await Part.findOne({ _id: partId});
     //console.log(part);
 
-    return NextResponse.json({ part, name: session?.user?.name ?? 'not logged in' });
+    return NextResponse.json({ part });
   } catch (error) {
     console.error('fuck failed to fetch part:', error);
     return new NextResponse('Internal Server Error',{ status: 500});

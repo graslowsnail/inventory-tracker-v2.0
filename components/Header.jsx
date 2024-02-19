@@ -7,7 +7,7 @@ const xrainLogo = '/xrainLogo.jpg'
 const navigation = [
   /* { name: 'Work Days', href: 'workdays' }, */
   { name: 'Parts', href: '/protected/parts' },
-  { name: 'Part History', href: '/partHistory' },
+  { name: 'Part History', href: '/protected/partHistory' },
 ]
 
 export default function Header() {
