@@ -28,7 +28,12 @@ const handleSelectSlot = async ({ start }) => {
 
     // Attempt to fetch usage data for the selected date
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/usage/${formattedDate}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage/${formattedDate}`,{
+            method: 'GET',
+            headers: {
+            },
+        });
+
         if (!response.ok) {
             throw new Error('Usage data not found');
         }
@@ -82,7 +87,7 @@ const handleSelectSlot = async ({ start }) => {
       const handleAddPart = async (barCodeId, date) => {
 
         try {
-            const response = await fetch(`http://localhost:3000/api/usage/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -104,7 +109,7 @@ const handleSelectSlot = async ({ start }) => {
             fetchUsageData();
           console.log('bar code id scaned correctly '+ barCodeId);
 
-            router.push(`/usage/${date}`);
+            router.push(`/protected/usage/${date}`);
 
         } catch (error) {
             setErrorMessage('A part with this barcode was not found: Try again');
