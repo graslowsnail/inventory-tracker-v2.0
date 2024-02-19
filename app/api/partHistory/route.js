@@ -1,4 +1,3 @@
-import connectDb from '@/lib/connectDb';
 import PartHistory from '@/models/ResetHistory';
 
 import { NextResponse } from "next/server";

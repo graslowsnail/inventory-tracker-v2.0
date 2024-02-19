@@ -1,5 +1,3 @@
-import connectDb from '@/lib/connectDb';
-import Part from '@/models/Part';
 import Usage from '@/models/Usage';
 import { NextResponse } from 'next/server';
 

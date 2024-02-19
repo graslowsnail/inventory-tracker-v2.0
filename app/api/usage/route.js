@@ -1,5 +1,4 @@
-import connectDb from '@/lib/connectDb';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import Part from '@/models/Part';
 import Usage from '@/models/Usage';
 import moment from 'moment';
