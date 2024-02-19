@@ -1,4 +1,5 @@
 import Part from '@/models/Part';
+import connectDb from '../../../lib/connectDB';
 
 import { NextResponse } from "next/server";
 

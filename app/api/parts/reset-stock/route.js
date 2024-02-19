@@ -1,6 +1,7 @@
 import Part from '@/models/Part';
 import ResetHistory from '@/models/ResetHistory';
 import { NextResponse } from 'next/server';
+import connectDb from '../../../../lib/connectDB.js';
 
 export async function POST(req,res) {
     try {

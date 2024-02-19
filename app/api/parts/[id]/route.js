@@ -1,5 +1,6 @@
 import Part from '@/models/Part';
 import { NextResponse } from "next/server";
+import connectDb from '../../../../lib/connectDB';
 
 // GET part by id
 export const GET = async (request) => {

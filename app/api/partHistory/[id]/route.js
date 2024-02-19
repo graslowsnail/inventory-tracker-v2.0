@@ -1,5 +1,6 @@
 import PartHistory from '@/models/ResetHistory';
 import { NextResponse } from "next/server";
+import connectDb from '../../../../lib/connectDB';
 
 // GET part by id
 export const GET = async (request) => {

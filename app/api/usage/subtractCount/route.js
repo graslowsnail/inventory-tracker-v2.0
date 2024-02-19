@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import Part from '@/models/Part';
 import Usage from '@/models/Usage';
 import moment from 'moment';
+import connectDb from '../../../../lib/connectDB';
 
 export const POST = async (req) => {
   // get barcode id and date from frotend.
