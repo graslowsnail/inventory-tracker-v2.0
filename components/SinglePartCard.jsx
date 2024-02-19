@@ -10,7 +10,12 @@ export default function SinglePartCard({ partId }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/parts/${partId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/parts/${partId}`,{
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+        });
 
         if (response.status === 500) {
           // Part not found, redirect to the parts list page
@@ -48,8 +53,11 @@ export default function SinglePartCard({ partId }) {
     const confirmDelete = confirm('Are you sure you want to delete this part?');
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://localhost:3000/api/parts/${partId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/parts/${partId}`, {
           method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
         if (!response.ok) {

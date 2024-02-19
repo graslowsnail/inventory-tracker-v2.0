@@ -31,6 +31,7 @@ const handleSelectSlot = async ({ start }) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage/${formattedDate}`,{
             method: 'GET',
             headers: {
+                'Content-Type': 'application/json',
             },
         });
 
@@ -64,6 +65,7 @@ const handleSelectSlot = async ({ start }) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage`,{
             method: 'GET',
             headers: {
+                'Content-Type': 'application/json',
             },
         });
         const data = await response.json();

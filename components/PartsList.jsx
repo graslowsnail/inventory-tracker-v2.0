@@ -11,8 +11,13 @@ export default function PartsList() {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                    const response = await fetch('http://localhost:3000/api/parts');
+                    try {const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/parts`,{
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
                     const data = await response.json();
                     setParts(data.parts);
                 } catch (error) {
@@ -36,8 +41,12 @@ export default function PartsList() {
     const confirmReset = confirm('Are you sure you want to reset all parts stock to initial stock?');
     if (confirmReset) {
         try {
-            const response = await fetch('http://localhost:3000/api/parts/reset-stock',
-            {method: 'POST'});
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/parts/reset-stock`, {
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
             const data = await response.json();
 

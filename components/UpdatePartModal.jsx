@@ -21,7 +21,7 @@ export default function UpdatePartModal({ isOpen, onClose, part, onUpdate }) {
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/api/parts/${part._id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/parts/${part._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -10,7 +10,12 @@ export default function SingleUsageCard({date}) {
 // Function to fetch usage data
     const fetchUsageData = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/usage/${date}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage/${date}`,{
+              method: 'GET',
+              headers: {
+            },
+        });
+
             const data = await response.json();
             setUsage(data);
         } catch (error) {
@@ -27,7 +32,7 @@ export default function SingleUsageCard({date}) {
   const handleAddPart = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:3000/api/usage/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +68,7 @@ export default function SingleUsageCard({date}) {
   const handleDeletePart = async (barCodeId) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:3000/api/usage/subtractCount`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage/subtractCount`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

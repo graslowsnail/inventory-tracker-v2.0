@@ -20,7 +20,7 @@ export default function AddNewPartModal({ isOpen, onClose }) {
     };
 
     try {
-        const response = await fetch('/api/parts', { // Adjust the URL path as necessary
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/parts`, { // Adjust the URL path as necessary
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

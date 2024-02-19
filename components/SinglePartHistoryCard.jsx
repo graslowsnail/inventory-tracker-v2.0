@@ -9,7 +9,13 @@ export default function SinglePartHistoryCard({ partHistoryId }) {
     async function fetchPartHistory() {
       try {
         // Assuming you have an API endpoint like /api/partHistory/{partHistoryId}
-        const response = await fetch(`http://localhost:3000/api/partHistory/${partHistoryId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistory/${partHistoryId}`,{
+             method: 'GET',
+             headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
         if (!response.ok) {
           throw new Error('Failed to fetch');
         }
