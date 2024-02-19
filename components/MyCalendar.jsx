@@ -56,7 +56,11 @@ const handleSelectSlot = async ({ start }) => {
     };
 
     const fetchUsageData = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/usage`,{
+            method: 'GET',
+            headers: {
+            },
+        });
         const data = await response.json();
         const utcEvents = data.map(event => {
             // Adjust the date to account for the time zone offset
