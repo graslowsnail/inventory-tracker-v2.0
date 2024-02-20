@@ -7,15 +7,16 @@ export default function PartHistoryCard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistory`,{
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistory/`,{
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
+
                 const data = await response.json();
                 setPartHistorys(data.partHistorys);
-                //console.log(data.partHistorys);
+                console.log(data.partHistorys);
             } catch (error) {
                 console.error("There was an error fetching the data:", error);
             }
