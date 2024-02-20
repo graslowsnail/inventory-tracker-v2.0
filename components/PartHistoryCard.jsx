@@ -7,9 +7,10 @@ export default function PartHistoryCard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistory/`,{
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistoy`,{
                     method: 'GET',
                     headers: {
+                        'Cache-Control': 'no-cache', // Forces a fresh fetch
                         'Content-Type': 'application/json',
                     },
                 });

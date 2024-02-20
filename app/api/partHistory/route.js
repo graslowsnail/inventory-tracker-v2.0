@@ -9,6 +9,7 @@ export async function GET() {
     await connectDb();
     // Sort part history docuemtns from newest to oldest 
     const partHistorys = await PartHistory.find().sort({ resetDate: -1});
+    console.log('fetching part history cards');
     console.log(partHistorys);
     return NextResponse.json({ partHistorys });
   }
