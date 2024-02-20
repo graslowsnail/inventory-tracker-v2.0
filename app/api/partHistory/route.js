@@ -11,7 +11,7 @@ export async function GET() {
     const partHistorys = await PartHistory.find().sort({ resetDate: -1});
     console.log('fetching part history cards');
     console.log(partHistorys);
-    return NextResponse.json({ partHistorys });
+    return new NextResponse.json({ partHistorys });
   }
   catch (error){
     console.log('Failed to fetch parts:', error);

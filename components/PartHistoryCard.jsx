@@ -4,10 +4,11 @@ import Link from 'next/link';
 
 export default function PartHistoryCard() {
     const [partHistorys, setPartHistorys] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistoy`,{
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistoy/`,{
                     method: 'GET',
                     headers: {
                         'Cache-Control': 'no-cache', // Forces a fresh fetch
