@@ -23,16 +23,20 @@ export default function AddPartModal({ isOpen, onClose, onSave, selectedDate }) 
                   value={barCodeId}
                   onChange={(e) => setBarCodeId(e.target.value)}
                   placeholder="Enter Barcode ID"
+                  className="border-4 rounded"
                   autoFocus
               />
               <div className="flex justify-end mt-6">
+
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  onClick={onClose}>
+                   Close
+                </button>
 
                 <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
                 type="submit">Add Part
                 </button>
 
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"                onClick={onClose}>Close
-                </button>
               </div>
                 </form>
             </div>
