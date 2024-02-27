@@ -11,6 +11,7 @@ export default function PartHistoryCard() {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/partHistory`, {
                     method: 'GET',
                     headers: {
+                        'Cache-Control': 'no-cache', // Forces a fresh fetch
                         'Content-Type': 'application/json',
                     },
                 });
