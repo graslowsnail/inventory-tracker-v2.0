@@ -12,10 +12,7 @@ export default async function SinglePartHistoryPage({ params }) {
   
 return (
   <div>
-  < SinglePartHistoryCard partHistoryId={partHistoryId}/>
-  <h1 className='text-center'>
-  single part history page
-  </h1>
+    < SinglePartHistoryCard partHistoryId={partHistoryId}/>
   </div>
 )
 };
